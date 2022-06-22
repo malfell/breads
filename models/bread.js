@@ -20,6 +20,11 @@ const breadSchema = new Schema({
   }
 })
 
+// Helper Methods
+//instance method
+breadSchema.methods.getBakedBy = function(){
+  return `${this.name} was baked with love by ${this.baker}`
+}
 
 
 
