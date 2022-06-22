@@ -1,10 +1,20 @@
 // DEPENDENCIES
 const express = require('express')
+const mongoose = require('mongoose')
 
 // CONFIGURATION
 require('dotenv').config()
 const PORT = process.env.PORT
 const app = express()
+
+// mongoose can be called anywhere after the required mongoose
+// The first argument that connect takes is the Mongo URI. 
+// The second argument contains optional properties that get rid 
+// of deprecation warnings.
+mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true}, 
+  () => { console.log('connected to mongo: ', process.env.MONGO_URI) }
+)
+
 
 // MIDDLEWARE
 app.set('views', __dirname + '/views')

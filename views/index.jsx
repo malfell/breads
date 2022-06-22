@@ -13,7 +13,7 @@ function Index ({breads, title})  {
             return (
             <li key={index}>
               {/* sets up links to index */}
-              <a href={`/breads/${index}`}>
+              <a href={`/breads/${bread.id}`}>
                 {bread.name}
               </a>
               
