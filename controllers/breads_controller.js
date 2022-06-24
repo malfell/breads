@@ -39,17 +39,25 @@ breads.get('/new', (req, res) => {
 //the show route would override if it's first
 //more specific on top, less specific on bottom
 breads.get('/:id/edit', (req, res) => {
-  Bread.findById(req.params.id) 
-    .then(foundBread => { 
-      res.render('edit', {
-        bread: foundBread 
-      })
-    })
+  //get access to all the bakers
+  Baker.find()
+  .then(foundBakers => {
+      Bread.findById(req.params.id) 
+        .then(foundBread => { 
+          res.render('edit', {
+            bread: foundBread,
+            bakers: foundBakers
+          })
+        })
+  })
+
 })
 
 // SHOW
 breads.get('/:id', (req, res) => {
   Bread.findById(req.params.id)
+    //get baker's data through populate
+    .populate('baker')
       .then(foundBread => {
           res.render('show', {
               bread: foundBread

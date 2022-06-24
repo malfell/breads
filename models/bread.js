@@ -22,7 +22,10 @@ const breadSchema = new Schema({
 // Helper Methods
 //instance method
 breadSchema.methods.getBakedBy = function(){
-  return `${this.name} was baked with love by ${this.baker}`
+  //after using .populate(), need to switch from this.baker to this.baker.name
+  //add getFullYear() at the end of startDate to get a cleaner year
+  return `${this.name} was baked with love by ${this.baker.name}, who
+  has been with us since ${this.baker.startDate.getFullYear()}`
 }
 
 
