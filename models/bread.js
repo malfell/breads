@@ -12,11 +12,10 @@ const breadSchema = new Schema({
   //how to add a default
   image: { type: String, default: 'http://placehold.it/500x500.png' },
   baker: {
-    type: String,
-    //enum means only the following names can be options
-    //important to have even if the front-end only has options because
-    //malicious users could mess with it still
-    enum: ['Rachel', 'Monica', 'Joey', 'Chandler', 'Ross', 'Phoebe']
+    //to have a one-to-many relationship, need Schema.Types.ObjectID
+    type: Schema.Types.ObjectID,
+    //refers to Baker model
+    ref: 'Baker'
   }
 })
 

@@ -3,6 +3,8 @@ const express = require('express')
 const methodOverride = require('method-override')
 const breads = express.Router()
 const Bread = require('../models/bread.js')
+//require baker
+const Baker = require('../models/baker.js')
 
 // MIDDLEWARE
 breads.use(methodOverride('_method'))
@@ -21,7 +23,15 @@ breads.get('/', (req, res) => {
 // NEW
 //New must be ABOVE the SHOW route (why?)
 breads.get('/new', (req, res) => {
-  res.render('new')
+    //gathers the bakers
+    Baker.find()
+      //passes promise callback a variable of foundBakers
+      .then(foundBakers => {
+        //sends all the baker data to our new view
+        res.render('new', {
+          bakers: foundBakers
+        })
+      })
 })
 
 // EDIT
