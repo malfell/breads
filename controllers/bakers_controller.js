@@ -17,6 +17,27 @@ baker.get('/data/seed', (req, res) => {
         .then(res.redirect('/breads'))
 })
 
+//INDEX for testing virtual
+baker.get('/', (req, res) => {
+    //finds all bakers
+    Baker.find()
+        .populate('breads')
+        .then(foundBakers => {
+            res.send(foundBakers)
+        })
+})
+
+//SHOW
+baker.get('/:id', (req, res) => {
+    Baker.findById(req.params.id)
+    .populate('breads')
+    //resulting promise
+    .then(foundBaker => {
+        res.render('bakerShow', {
+            baker: foundBaker
+        })
+    })
+})
 
 //export baker router
 module.exports = baker

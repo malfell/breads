@@ -3,6 +3,8 @@
 const mongoose = require('mongoose');
 // shorthand for schema
 const { Schema } = mongoose;
+//require bread.js
+const Bread = require('./bread.js');
 
 //schema
 const bakerSchema = new Schema({
@@ -19,7 +21,18 @@ const bakerSchema = new Schema({
         required: true,
     },
     bio: String,
-});
+    //must specify to schema that we want data to show up for virtual
+}, { toJSON: { virtuals: true }});
+
+//bakerSchema virtual
+bakerSchema.virtual('breads', {
+    //model's schema
+    ref:'Bread',
+    //field of parent that matches child's ref field value
+    localField:'_id',
+    //ref field on children documents
+    foreignField: 'baker',
+})
 
 //model and export
 const Baker = mongoose.model('Baker', bakerSchema);

@@ -11,13 +11,19 @@ breads.use(methodOverride('_method'))
 
 // INDEX
 breads.get('/', (req, res) => {
-  Bread.find()
-      .then(foundBreads => {
-          res.render('index', {
-              breads: foundBreads,
-              title: 'Index Page'
+  //find all bakers
+  Baker.find()
+    .then(foundBakers => {
+        Bread.find()
+        .then(foundBreads => {
+            res.render('index', {
+                breads: foundBreads,
+                bakers: foundBakers,
+                title: 'Index Page'
           })
       })
+    })
+
 })
 
 // NEW
