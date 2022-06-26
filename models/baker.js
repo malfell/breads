@@ -34,6 +34,18 @@ bakerSchema.virtual('breads', {
     foreignField: 'baker',
 })
 
+// hooks
+// delete hook
+    // write post hook on breadSchema
+    // pass argument of 'findOneAndDelete'
+    //pass hook a second argument that is a callback function expression
+bakerSchema.post('findOneAndDelete', function() {
+    Bread.deleteMany({ baker:this._conditions._id })
+        .then(deleteStatus => {
+            console.log(deleteStatus)
+        })
+})
+
 //model and export
 const Baker = mongoose.model('Baker', bakerSchema);
 module.exports = Baker
