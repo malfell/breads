@@ -11,8 +11,10 @@ function Index ({breads, title, bakers})  {
         {
           bakers.map((baker) => {
             return(
-              <li key={baker.id}>
-                <a href={`/bakers/${baker.id}`}>{baker.name}</a>
+              // after using .lean(), "id" must be changed to "_id"
+              //JS is more specific!
+              <li key={baker._id}>
+                <a href={`/bakers/${baker._id}`}>{baker.name}</a>
               </li>
             )
           })
@@ -25,9 +27,9 @@ function Index ({breads, title, bakers})  {
         {
           breads.map((bread, index)=> {
             return (
-            <li key={index}>
+            <li key={bread._id}>
               {/* sets up links to index */}
-              <a href={`/breads/${bread.id}`}>
+              <a href={`/breads/${bread._id}`}>
                 {bread.name}
               </a>
               

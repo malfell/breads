@@ -35,7 +35,11 @@ baker.get('/', (req, res) => {
 //SHOW
 baker.get('/:id', (req, res) => {
     Baker.findById(req.params.id)
-    .populate('breads')
+    //limits amount of bread shown on each baker page
+    .populate({
+        path: 'breads',
+        options: { limit: 5 }
+    })
     //resulting promise
     .then(foundBaker => {
         res.render('bakerShow', {

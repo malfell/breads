@@ -9,22 +9,33 @@ const Baker = require('../models/baker.js')
 // MIDDLEWARE
 breads.use(methodOverride('_method'))
 
+//refactor some other .thens to be async/await!
 // INDEX
-breads.get('/', (req, res) => {
+breads.get('/', async (req, res) => {
   //find all bakers
-  Baker.find()
-    .then(foundBakers => {
-        Bread.find()
-        .then(foundBreads => {
-            res.render('index', {
-                breads: foundBreads,
-                bakers: foundBakers,
-                title: 'Index Page'
-          })
-      })
-    })
-
+  //add .lean() to save memory usage
+  const foundBakers = await Baker.find().lean()
+  //find all breads
+  // add .limit(number) to limit the amount of breads loaded at once
+  // add .lean() to save memory usage
+  const foundBreads = await Bread.find().limit(4).lean()
+    //However, what if users actually want to see the entire list? 
+    //We could create a custom route for a "See All Breads" button that 
+    //queries the breads without the limit and reloads the page with all the breads. 
+    //Alternatively, we could also try utilizing the skip method to paginate through 
+    //all the breads in small chunks at a time rather than immediately displaying 
+    //all breads. All this to say, there are many ways to solve that problem. 
+    //We won't get to either of them, but if you're interested try tackling it on 
+    //your own time as a personal bonus!
+  //renders page
+  console.log(foundBreads)
+  res.render('index', {
+      breads: foundBreads,
+      bakers: foundBakers,
+      title: 'Index Page'
+  })
 })
+
 
 // NEW
 //New must be ABOVE the SHOW route (why?)
